@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: notice_board
+  datasource:
+    url: jdbc:postgresql://localhost:5432/noticedb
+    username: admin
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
