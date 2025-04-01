@@ -1,17 +1,18 @@
 package com.notice.notice_board.domain.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.type.TrueFalseConverter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.util.Date;
+@Getter
 @SoftDelete(converter = TrueFalseConverter.class, columnName = "is_deleted")
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Default {
+public abstract class Default {
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
