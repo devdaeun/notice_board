@@ -1,12 +1,11 @@
 package com.notice.notice_board.application.service;
 
 import com.notice.notice_board.application.dto.request.PostRequestDto;
-import com.notice.notice_board.application.dto.response.PostResponseDto;
+import com.notice.notice_board.application.dto.response.PostUpdateResponseDto;
 import com.notice.notice_board.domain.model.Post;
 import com.notice.notice_board.infastructure.JpaPostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,9 +20,17 @@ public class PostService {
         return post.getId();
     }
 
-    public PostResponseDto modifyPost(Long id, PostRequestDto requestDto) {
-        Post post = postRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+    public PostUpdateResponseDto modifyPost(Long id, PostRequestDto requestDto) {
+        Post post = findPostById(id);
         post.updatePost(requestDto);
-        return PostResponseDto.from(post);
+        return PostUpdateResponseDto.from(post);
+    }
+
+    public Post getPost(Long id) {
+        return findPostById(id);
+    }
+
+    public Post findPostById(Long id) {
+        return postRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시글입니다."));
     }
 }

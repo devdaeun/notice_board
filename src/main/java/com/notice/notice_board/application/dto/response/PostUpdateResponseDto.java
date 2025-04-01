@@ -5,17 +5,19 @@ import lombok.Builder;
 
 import java.util.Date;
 @Builder
-public record PostResponseDto(
+public record PostUpdateResponseDto(
         Long id,
         String title,
-        String content
+        String content,
+        Date updatedAt
 ) {
 
-    public static PostResponseDto from(Post post) {
-        return PostResponseDto.builder()
+    public static PostUpdateResponseDto from(Post post) {
+        return PostUpdateResponseDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
+                .updatedAt(post.getUpdatedAt())
                 .build();
     }
 }

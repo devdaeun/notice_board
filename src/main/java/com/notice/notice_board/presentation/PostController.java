@@ -1,8 +1,9 @@
 package com.notice.notice_board.presentation;
 
 import com.notice.notice_board.application.dto.request.PostRequestDto;
-import com.notice.notice_board.application.dto.response.PostResponseDto;
+import com.notice.notice_board.application.dto.response.PostUpdateResponseDto;
 import com.notice.notice_board.application.service.PostService;
+import com.notice.notice_board.domain.model.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,14 @@ public class PostController {
     }
 
     @PutMapping("/modify/{id}")
-    public ResponseEntity<PostResponseDto> modifyPost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
-        PostResponseDto responseDto = postService.modifyPost(id, requestDto);
+    public ResponseEntity<PostUpdateResponseDto> modifyPost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
+        PostUpdateResponseDto responseDto = postService.modifyPost(id, requestDto);
         return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getPost(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getPost(id));
     }
 
 
