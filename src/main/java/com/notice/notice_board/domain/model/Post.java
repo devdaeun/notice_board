@@ -1,9 +1,12 @@
 package com.notice.notice_board.domain.model;
 
+import com.notice.notice_board.application.dto.request.PostRequestDto;
+import com.notice.notice_board.application.dto.response.PostResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SoftDelete;
 
 @Entity
 @Getter
@@ -29,4 +32,8 @@ public class Post extends Default{
 
     }
 
+    public void updatePost(PostRequestDto requestDto) {
+        this.title = requestDto.title();
+        this.content = requestDto.content();
+    }
 }
