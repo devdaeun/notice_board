@@ -46,4 +46,8 @@ public class CommentService {
         return commentRepository.findById(id).orElseThrow(
                 ()-> new NullPointerException("존재하지않는 게시글입니다."));
     }
+
+    public void deleteComment(Long id) {
+        commentRepository.deleteById(id);
+    }
 }
