@@ -1,5 +1,6 @@
 package com.notice.notice_board.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.notice.notice_board.application.dto.request.CommentUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public class Comment extends Default{
     @Column(nullable = false)
     String content;
 
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", referencedColumnName = "post_id", insertable = true)
     Post post;

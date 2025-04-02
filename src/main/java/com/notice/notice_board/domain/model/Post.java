@@ -29,7 +29,7 @@ public class Post extends Default{
     @Column(nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     @JsonBackReference
     List<Comment> comments;
 
