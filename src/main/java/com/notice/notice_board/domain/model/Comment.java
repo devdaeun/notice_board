@@ -19,13 +19,14 @@ public class Comment extends Default{
     @Column(nullable = false)
     String content;
 
-    @Column(nullable = false)
-    Long postId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id", insertable = true)
+    Post post;
 
     @Builder
-    public Comment(String content, Long postId){
+    public Comment(String content, Post post){
         this.content = content;
-        this.postId = postId;
+        this.post = post;
     }
 
     public void updateComment(CommentUpdateRequestDto requestDto) {

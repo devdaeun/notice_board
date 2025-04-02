@@ -2,6 +2,7 @@ package com.notice.notice_board.presentation;
 
 import com.notice.notice_board.application.dto.request.CommentRequestDto;
 import com.notice.notice_board.application.dto.request.CommentUpdateRequestDto;
+import com.notice.notice_board.application.dto.response.CommentResponseDto;
 import com.notice.notice_board.application.dto.response.CommentUpdateResponseDto;
 import com.notice.notice_board.application.service.CommentService;
 import com.notice.notice_board.domain.model.Comment;
@@ -40,7 +41,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comment> getComment(@PathVariable Long id) {
+    public ResponseEntity<CommentResponseDto> getComment(@PathVariable Long id) {
         return ResponseEntity.ok(commentService.getComment(id));
     }
 

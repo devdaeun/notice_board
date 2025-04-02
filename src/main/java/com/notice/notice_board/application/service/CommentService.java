@@ -2,8 +2,10 @@ package com.notice.notice_board.application.service;
 
 import com.notice.notice_board.application.dto.request.CommentRequestDto;
 import com.notice.notice_board.application.dto.request.CommentUpdateRequestDto;
+import com.notice.notice_board.application.dto.response.CommentResponseDto;
 import com.notice.notice_board.application.dto.response.CommentUpdateResponseDto;
 import com.notice.notice_board.domain.model.Comment;
+import com.notice.notice_board.domain.model.Post;
 import com.notice.notice_board.domain.repository.CommentRepository;
 import com.notice.notice_board.domain.repository.PostRepository;
 import com.notice.notice_board.infastructure.JpaCommentRepository;
@@ -21,10 +23,8 @@ public class CommentService {
     private final JpaPostRepository postRepository;
 
     public Long createComment(CommentRequestDto requestDto) {
-        postRepository.findById(requestDto.postId()).orElseThrow(
-                ()-> new IllegalArgumentException("존재하지않는 게시글입니다."));
-
-        Comment comment = commentRepository.save(requestDto.createComment());
+        Post post = findPostById(requestDto.postId());
+        Comment comment = commentRepository.save(requestDto.createComment(post));
         return comment.getId();
     }
 
@@ -34,8 +34,12 @@ public class CommentService {
         return CommentUpdateResponseDto.from(comment);
     }
 
-    public Comment getComment(Long id) {
-        return findCommentById(id);
+    public CommentResponseDto getComment(Long id) {
+        return CommentResponseDto.from(findCommentById(id));
+    }
+
+    public Post findPostById(Long id) {
+        return postRepository.findById(id).orElseThrow(()-> new NullPointerException("존재하지 않는 게시글입니다."));
     }
 
     public Comment findCommentById(Long id) {
