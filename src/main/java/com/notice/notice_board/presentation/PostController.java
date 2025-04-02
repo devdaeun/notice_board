@@ -28,7 +28,7 @@ public class PostController {
         return ResponseEntity.created(postLocation).build();
     }
 
-    @PutMapping("/modify/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<PostUpdateResponseDto> modifyPost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
         PostUpdateResponseDto responseDto = postService.modifyPost(id, requestDto);
         return ResponseEntity.ok(responseDto);
@@ -38,6 +38,7 @@ public class PostController {
     public ResponseEntity<Post> getPost(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getPost(id));
     }
+
 
 
 }

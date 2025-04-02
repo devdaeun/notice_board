@@ -1,13 +1,12 @@
 package com.notice.notice_board.presentation;
 
 import com.notice.notice_board.application.dto.request.CommentRequestDto;
+import com.notice.notice_board.application.dto.request.CommentUpdateRequestDto;
+import com.notice.notice_board.application.dto.response.CommentUpdateResponseDto;
 import com.notice.notice_board.application.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -20,7 +19,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createComment(@RequestBody CommentRequestDto requestDto) {
+    public ResponseEntity<Void> createComment(@RequestBody CommentRequestDto requestDto) {
         Long commentId = commentService.createComment(requestDto);
 
         URI location = UriComponentsBuilder
@@ -30,6 +29,14 @@ public class CommentController {
 
         return ResponseEntity.created(location).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CommentUpdateResponseDto> modifyComment(@PathVariable Long id,
+                                           @RequestBody CommentUpdateRequestDto requestDto) {
+        CommentUpdateResponseDto responseDto = commentService.modifyComment(id,requestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
 
 
 }
