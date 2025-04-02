@@ -30,6 +30,10 @@ public class PostService {
         return findPostById(id);
     }
 
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
+    }
+
     public Post findPostById(Long id) {
         return postRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시글입니다."));
     }
