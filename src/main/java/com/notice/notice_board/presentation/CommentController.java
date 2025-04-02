@@ -4,6 +4,8 @@ import com.notice.notice_board.application.dto.request.CommentRequestDto;
 import com.notice.notice_board.application.dto.request.CommentUpdateRequestDto;
 import com.notice.notice_board.application.dto.response.CommentUpdateResponseDto;
 import com.notice.notice_board.application.service.CommentService;
+import com.notice.notice_board.domain.model.Comment;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,11 @@ public class CommentController {
                                            @RequestBody CommentUpdateRequestDto requestDto) {
         CommentUpdateResponseDto responseDto = commentService.modifyComment(id,requestDto);
         return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Comment> getComment(@PathVariable Long id) {
+        return ResponseEntity.ok(commentService.getComment(id));
     }
 
 

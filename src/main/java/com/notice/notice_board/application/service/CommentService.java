@@ -34,6 +34,10 @@ public class CommentService {
         return CommentUpdateResponseDto.from(comment);
     }
 
+    public Comment getComment(Long id) {
+        return findCommentById(id);
+    }
+
     public Comment findCommentById(Long id) {
         return commentRepository.findById(id).orElseThrow(
                 ()-> new NullPointerException("존재하지않는 게시글입니다."));
