@@ -10,8 +10,7 @@ public record CommentResponseDto(
         String content,
         Long postId,
         Date createdAt,
-        Date updatedAt,
-        Boolean  isDeleted
+        Date updatedAt
 ) {
 
     public static CommentResponseDto from(Comment comment) {
@@ -21,7 +20,6 @@ public record CommentResponseDto(
                 .postId(comment.getPost().getId())
                 .createdAt(comment.getCreatedAt())
                 .updatedAt(comment.getUpdatedAt())
-                .isDeleted(comment.isDeleted())
                 .build();
     }
 }

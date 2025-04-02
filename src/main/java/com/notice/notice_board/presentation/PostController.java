@@ -1,10 +1,14 @@
 package com.notice.notice_board.presentation;
 
 import com.notice.notice_board.application.dto.request.PostRequestDto;
+import com.notice.notice_board.application.dto.response.PostResponseDto;
 import com.notice.notice_board.application.dto.response.PostUpdateResponseDto;
 import com.notice.notice_board.application.service.PostService;
 import com.notice.notice_board.domain.model.Post;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PagedModel;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -35,14 +39,24 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPost(@PathVariable Long id) {
-        return ResponseEntity.ok(postService.getPost(id));
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id,
+                                                         @RequestParam(required = false, defaultValue = "0") int page,
+                                                         @RequestParam(required = false, defaultValue = "10") int size) {
+        size = pageSizeCheck(size);
+        return ResponseEntity.ok(postService.getPost(id, page, size));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private int pageSizeCheck(int size) {
+        if(size != 10 && size != 30 && size != 50){
+            return size = 10;
+        }
+        return size;
     }
 
 

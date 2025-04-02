@@ -1,11 +1,18 @@
 package com.notice.notice_board.application.service;
 
 import com.notice.notice_board.application.dto.request.PostRequestDto;
+import com.notice.notice_board.application.dto.response.CommentResponseDto;
+import com.notice.notice_board.application.dto.response.PostResponseDto;
 import com.notice.notice_board.application.dto.response.PostUpdateResponseDto;
+import com.notice.notice_board.domain.model.Comment;
 import com.notice.notice_board.domain.model.Post;
+import com.notice.notice_board.infastructure.JpaCommentRepository;
 import com.notice.notice_board.infastructure.JpaPostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class PostService {
 
     private final JpaPostRepository postRepository;
+
+    private final JpaCommentRepository commentRepository;
 
     public Long createPost(PostRequestDto requestDto) {
         Post post = postRepository.save(requestDto.createPost());
@@ -26,8 +35,12 @@ public class PostService {
         return PostUpdateResponseDto.from(post);
     }
 
-    public Post getPost(Long id) {
-        return findPostById(id);
+    public PostResponseDto getPost(Long id, int page, int size) {
+        Post post= findPostById(id);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Comment> commentPage = commentRepository.findAllByPost(post, pageable);
+
+        return PostResponseDto.from(post,commentPage.map(CommentResponseDto::from));
     }
 
     public void deletePost(Long id) {

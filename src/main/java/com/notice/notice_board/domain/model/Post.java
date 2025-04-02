@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,8 +31,7 @@ public class Post extends Default{
     private String content;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    @JsonBackReference
-    List<Comment> comments;
+    List<Comment> comments = new ArrayList<>();
 
 
     @Builder
